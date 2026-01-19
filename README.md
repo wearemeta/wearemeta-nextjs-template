@@ -37,6 +37,29 @@ cd my-new-app
 
 ### Setup Steps
 
+**Option 1: Automated Setup (Recommended)**
+
+Run the setup script that automates all configuration:
+
+```bash
+cd my-new-app
+./setup.sh
+```
+
+The script will:
+- Update package.json with your app name
+- Update app metadata
+- Build the design system
+- Install dependencies
+- Create .env.local file
+
+Then run:
+```bash
+pnpm dev
+```
+
+**Option 2: Manual Setup**
+
 1. **Build the design system first** (if not already built):
 
 ```bash
@@ -51,13 +74,23 @@ cd ../my-new-app
 pnpm install
 ```
 
-3. **Run the development server**:
+3. **Create .env.local**:
+
+```bash
+cat > .env.local << EOF
+NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_DEV_BYPASS_AUTH=true
+NEXT_PUBLIC_DEV_AUTH_TOKEN=
+EOF
+```
+
+4. **Run the development server**:
 
 ```bash
 pnpm dev
 ```
 
-4. **Open** [http://localhost:3000](http://localhost:3000) in your browser.
+5. **Open** [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 📁 Project Structure
 
