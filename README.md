@@ -21,19 +21,35 @@ A production-ready Next.js starter template with the WeAreMeta Design System pre
 
 ## 🏁 Quick Start
 
-### Option 1: Clone this repository
+### Option 1: Automated Repository Creation (Recommended)
+
+Use our script to create a new repository with the owner automatically set to `wearemeta`:
 
 ```bash
 cd /Users/joaomateus/code/wearemeta
-git clone <repository-url> my-new-app
-cd my-new-app
+./wearemeta-nextjs-template/create-repo.sh
 ```
 
-### Option 2: Use as GitHub Template
+The script will:
+- Prompt for your app name
+- Create the repository under `wearemeta` organization
+- Clone it locally
+- Then run `pnpm setup` to configure everything
 
-1. Click "Use this template" on GitHub
-2. Create your new repository
-3. Clone it locally
+### Option 2: Use GitHub Template (Manual)
+
+1. Go to: https://github.com/wearemeta/wearemeta-nextjs-template
+2. Click "Use this template" button
+3. **Important:** Select `wearemeta` as the owner (not your personal account)
+4. Enter your repository name
+5. Create the repository
+6. Clone it locally:
+
+```bash
+cd /Users/joaomateus/code/wearemeta
+git clone https://github.com/wearemeta/your-app-name.git
+cd your-app-name
+```
 
 ### Setup Steps
 
