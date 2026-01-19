@@ -30,7 +30,7 @@ function UserDropdown() {
   const userData = {
     name: user?.name || user?.display_name || 'User',
     email: user?.email || 'user@example.com',
-    avatar: user?.avatar || '/assets/img/default-avatar.png',
+    avatar: user?.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=User&backgroundColor=b6e3f4,c0aede,d1d4f9',
     initials: (user?.name || user?.display_name || 'U')
       .split(' ')
       .map((n) => n[0])

@@ -42,13 +42,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Check if dev bypass is enabled
     const devBypassAuth = process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true';
     if (devBypassAuth) {
-      // In dev mode with bypass, set a mock user
+      // In dev mode with bypass, set a mock user with a real avatar image
       setUser({
         id: 1,
         email: 'dev@example.com',
         name: 'Dev User',
         display_name: 'Dev User',
-        avatar: '/assets/img/default-avatar.png',
+        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=DevUser&backgroundColor=b6e3f4,c0aede,d1d4f9',
       });
       setStatus('succeeded');
       return;
@@ -114,6 +114,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Fetch user on mount if token exists
   useEffect(() => {
     const token = Cookies.get(authConfig.storageTokenKeyName);
+    const devBypassAuth = process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true';
+    
+    // In dev bypass mode, set mock user immediately with a real avatar image
+    if (devBypassAuth && status === 'idle') {
+      setUser({
+        id: 1,
+        email: 'dev@example.com',
+        name: 'Dev User',
+        display_name: 'Dev User',
+        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=DevUser&backgroundColor=b6e3f4,c0aede,d1d4f9',
+      });
+      setStatus('succeeded');
+      return;
+    }
+    
     if (token && status === 'idle') {
       fetchUser();
     }
