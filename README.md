@@ -130,32 +130,64 @@ pnpm dev
 
 ## 📁 Project Structure
 
+This template follows Next.js best practices and a feature-based architecture for scalability and maintainability.
+
 ```
 my-new-app/
-├── app/                    # Next.js app directory
-│   ├── layout.tsx         # Root layout with AuthProvider & AuthGuard
-│   └── page.tsx           # Home page with AppLayout example
+├── app/                          # Next.js App Router (pages/routes)
+│   ├── layout.tsx               # Root layout with providers
+│   ├── client-layout.tsx        # Client layout with AppLayout wrapper
+│   └── page.tsx                 # Home page
+│
 ├── src/
-│   ├── lib/
-│   │   ├── auth/
-│   │   │   ├── AuthContext.tsx  # Auth context & useAuth hook
-│   │   │   └── config.ts        # Auth configuration
-│   │   └── api/
-│   │       └── client.ts        # Axios instance with auth interceptors
-│   ├── components/
-│   │   └── auth/
-│   │       └── AuthGuard.tsx   # Route protection component
-│   ├── types/
-│   │   └── user.ts             # User type definitions
-│   └── styles/
-│       └── globals.css    # Global styles
+│   ├── components/              # Reusable UI components
+│   │   ├── auth/                # Authentication components
+│   │   ├── common/              # Shared/common components
+│   │   ├── layout/              # Layout-specific components
+│   │   └── ui/                  # Base UI components (if needed)
+│   │
+│   ├── features/                 # Feature modules (business logic)
+│   │   └── [feature-name]/      # Each feature is self-contained
+│   │       ├── components/      # Feature-specific components
+│   │       ├── hooks/           # Feature-specific hooks
+│   │       ├── lib/             # Feature-specific utilities
+│   │       └── types/           # Feature-specific types
+│   │
+│   ├── hooks/                    # Global custom React hooks
+│   │
+│   ├── lib/                      # Shared utilities and configurations
+│   │   ├── api/                 # API clients and utilities
+│   │   ├── auth/                # Authentication logic
+│   │   └── utils/               # Utility functions
+│   │
+│   ├── providers/                # React context providers
+│   │
+│   ├── styles/                   # Global styles and themes
+│   │   └── globals.css
+│   │
+│   └── types/                    # Global TypeScript type definitions
+│       └── user.ts
+│
 ├── public/
-│   └── assets/            # Logo assets (meta, damia, landing)
-├── package.json           # Dependencies (includes axios, js-cookie)
-├── tailwind.config.ts     # Tailwind with design system colors
-├── tsconfig.json          # TypeScript configuration
-└── next.config.ts         # Next.js configuration
+│   └── assets/                   # Static assets (logos, icons, images)
+│
+├── package.json
+├── tailwind.config.ts
+├── tsconfig.json
+└── next.config.ts
 ```
+
+### Folder Guidelines
+
+- **`app/`**: Next.js App Router pages and layouts. Each folder becomes a route.
+- **`src/components/`**: Reusable components used across multiple features.
+- **`src/features/`**: Self-contained feature modules with their own components, hooks, and utilities.
+- **`src/hooks/`**: Global hooks used across multiple features.
+- **`src/lib/`**: Shared utilities, API clients, and configurations.
+- **`src/providers/`**: React Context providers for global state.
+- **`src/types/`**: Global TypeScript types shared across features.
+
+Each directory contains a `README.md` with detailed guidelines and examples.
 
 ## 🎨 Using the Design System
 

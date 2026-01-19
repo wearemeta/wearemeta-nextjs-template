@@ -30,6 +30,9 @@ yarn-error.log*
 # npm config (contains token reference)
 .npmrc
 
+# Keep empty directories
+!.gitkeep
+
 # vercel
 .vercel
 
