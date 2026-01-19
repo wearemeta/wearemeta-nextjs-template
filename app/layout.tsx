@@ -4,6 +4,8 @@ import '@wearemeta/design-system/themes/meta';
 import '@wearemeta/design-system/themes/sidebar';
 import '@fontsource/geist';
 import '../src/styles/globals.css';
+import { AuthProvider } from '@/lib/auth/AuthContext';
+import { AuthGuard } from '@/components/auth/AuthGuard';
 
 export const metadata: Metadata = {
   title: 'WeAreMeta App',
@@ -18,7 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="meta-theme" suppressHydrationWarning>
       <body className="flex flex-col min-h-screen antialiased meta-theme" suppressHydrationWarning>
-        {children}
+        <AuthProvider>
+          <AuthGuard>
+            {children}
+          </AuthGuard>
+        </AuthProvider>
       </body>
     </html>
   );

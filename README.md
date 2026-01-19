@@ -9,6 +9,9 @@ A production-ready Next.js starter template with the WeAreMeta Design System pre
 - ✅ **TypeScript** configured
 - ✅ **Tailwind CSS** with design system colors
 - ✅ **AppLayout** component with sidebar, header, and footer
+- ✅ **Authentication system** integrated (matches employee hub)
+- ✅ **User context** with automatic user data fetching
+- ✅ **Avatar** automatically populated with user info
 - ✅ **Report Issue** button enabled
 - ✅ **Screenshot capture** (html2canvas) ready
 - ✅ **Theme support** (Meta, Damia, Landing)
@@ -64,14 +67,25 @@ pnpm dev
 ```
 my-new-app/
 ├── app/                    # Next.js app directory
-│   ├── layout.tsx         # Root layout with design system
+│   ├── layout.tsx         # Root layout with AuthProvider & AuthGuard
 │   └── page.tsx           # Home page with AppLayout example
 ├── src/
+│   ├── lib/
+│   │   ├── auth/
+│   │   │   ├── AuthContext.tsx  # Auth context & useAuth hook
+│   │   │   └── config.ts        # Auth configuration
+│   │   └── api/
+│   │       └── client.ts        # Axios instance with auth interceptors
+│   ├── components/
+│   │   └── auth/
+│   │       └── AuthGuard.tsx   # Route protection component
+│   ├── types/
+│   │   └── user.ts             # User type definitions
 │   └── styles/
 │       └── globals.css    # Global styles
 ├── public/
 │   └── assets/            # Logo assets (meta, damia, landing)
-├── package.json           # Dependencies (includes html2canvas)
+├── package.json           # Dependencies (includes axios, js-cookie)
 ├── tailwind.config.ts     # Tailwind with design system colors
 ├── tsconfig.json          # TypeScript configuration
 └── next.config.ts         # Next.js configuration
@@ -101,6 +115,21 @@ import { AppLayout, Button, Card } from '@wearemeta/design-system';
 
 ## 🔧 Configuration
 
+### Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```bash
+# API Configuration
+NEXT_PUBLIC_API_URL=https://api.example.com
+
+# Authentication Configuration (Development)
+# Set to 'true' to bypass authentication in development
+NEXT_PUBLIC_DEV_BYPASS_AUTH=false
+# Development token (only used if DEV_BYPASS_AUTH is true)
+NEXT_PUBLIC_DEV_AUTH_TOKEN=your-dev-token-here
+```
+
 ### Design System Path
 
 The template uses a local file reference to the design system:
@@ -114,6 +143,44 @@ Make sure the design system is built before running your app:
 ```bash
 cd ../wearemeta-design-system
 pnpm build
+```
+
+### Authentication
+
+The template includes a complete authentication system that matches the employee hub:
+
+- **AuthProvider**: React Context that manages user state
+- **AuthGuard**: Component that protects routes and redirects to login
+- **useAuth hook**: Access user data anywhere in your app
+- **Automatic user fetching**: User data is fetched on app load
+- **Avatar integration**: User avatar, name, and email are automatically displayed
+
+The authentication system:
+- Fetches user data from `/me/` endpoint
+- Stores authentication token in cookies (`access_token`)
+- Automatically adds Bearer token to API requests
+- Handles token expiration and redirects to login
+- Supports development bypass mode
+
+**Using the auth hook:**
+
+```tsx
+import { useAuth } from '@/lib/auth/AuthContext';
+
+function MyComponent() {
+  const { user, status, error, logout } = useAuth();
+  
+  if (status === 'loading') return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  
+  return (
+    <div>
+      <p>Welcome, {user?.name}!</p>
+      <p>Email: {user?.email}</p>
+      <button onClick={logout}>Logout</button>
+    </div>
+  );
+}
 ```
 
 ### Themes
@@ -161,6 +228,15 @@ Update the sidebar menu items in `app/page.tsx`:
   </SidebarMenuButton>
 </SidebarMenuItem>
 ```
+
+### User Avatar
+
+The user avatar in the sidebar automatically displays:
+- User's avatar image (if available)
+- User's name and email
+- Fallback initials if no avatar
+
+The avatar is populated from the authentication context, which fetches user data from your API's `/me/` endpoint.
 
 ## 🛠️ Available Scripts
 

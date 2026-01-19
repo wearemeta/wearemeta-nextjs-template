@@ -19,10 +19,25 @@ import {
 } from '@wearemeta/design-system';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, useSidebarDropdown } from '@wearemeta/design-system';
 import { Home, Settings, FileText, Pin, LogOut } from 'lucide-react';
+import { useAuth } from '@/lib/auth/AuthContext';
 
-// Component that uses the dropdown context
+// Component that uses the dropdown context and auth
 function UserDropdown() {
   const { setIsDropdownOpen } = useSidebarDropdown();
+  const { user, logout } = useAuth();
+
+  // User data with fallbacks
+  const userData = {
+    name: user?.name || user?.display_name || 'User',
+    email: user?.email || 'user@example.com',
+    avatar: user?.avatar || '/assets/img/default-avatar.png',
+    initials: (user?.name || user?.display_name || 'U')
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2),
+  };
 
   return (
     <div className="group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
@@ -38,12 +53,12 @@ function UserDropdown() {
             "
           >
             <Avatar className="h-8 w-8 flex-shrink-0">
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>JD</AvatarFallback>
+              <AvatarImage src={userData.avatar} alt={userData.name} />
+              <AvatarFallback>{userData.initials}</AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-              <span className="truncate font-semibold">John Doe</span>
-              <span className="truncate text-xs text-muted-foreground">john@example.com</span>
+              <span className="truncate font-semibold">{userData.name}</span>
+              <span className="truncate text-xs text-muted-foreground">{userData.email}</span>
             </div>
           </button>
         </DropdownMenuTrigger>
@@ -58,7 +73,7 @@ function UserDropdown() {
             Pin Sidebar
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={logout}>
             <LogOut className="mr-2 h-4 w-4" />
             Log out
           </DropdownMenuItem>
