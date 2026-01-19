@@ -39,19 +39,30 @@ cd my-new-app
 
 **Option 1: Automated Setup (Recommended)**
 
-Run the setup script that automates all configuration:
+Run the setup script that automates all configuration. The script detects your app name from the directory and configures everything automatically.
 
+**Using npm script:**
 ```bash
 cd my-new-app
-./setup.sh
+pnpm setup
+# or
+npm run setup
+```
+
+**Or run directly:**
+```bash
+cd my-new-app
+./setup.sh    # Bash version
+# or
+node setup.js # Node.js version
 ```
 
 The script will:
-- Update package.json with your app name
-- Update app metadata
-- Build the design system
-- Install dependencies
-- Create .env.local file
+- ✅ Update package.json with your app name (detected from directory)
+- ✅ Update app metadata (title and description)
+- ✅ Build the design system
+- ✅ Install dependencies
+- ✅ Create .env.local file
 
 Then run:
 ```bash
