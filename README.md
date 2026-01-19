@@ -9,13 +9,10 @@ A production-ready Next.js starter template with the WeAreMeta Design System pre
 - ✅ **TypeScript** configured
 - ✅ **Tailwind CSS** with design system colors
 - ✅ **AppLayout** component with sidebar, header, and footer
-- ✅ **Authentication system** integrated (matches employee hub)
+- ✅ **Authentication system** integrated
 - ✅ **User context** with automatic user data fetching
-- ✅ **Avatar** automatically populated with user info
 - ✅ **Report Issue** button enabled
-- ✅ **Screenshot capture** (html2canvas) ready
 - ✅ **Theme support** (Meta, Damia, Landing)
-- ✅ **Logo assets** included
 
 ## 📋 Prerequisites
 
