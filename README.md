@@ -188,7 +188,7 @@ pnpm build
 
 ### Authentication
 
-The template includes a complete authentication system that matches the employee hub:
+The template includes a complete authentication system:
 
 - **AuthProvider**: React Context that manages user state
 - **AuthGuard**: Component that protects routes and redirects to login
