@@ -7,9 +7,6 @@ import '../src/styles/globals.css';
 import { AuthProvider } from '@/lib/auth/AuthContext';
 import { AuthGuard } from '@/components/auth/AuthGuard';
 import { Toaster } from '@wearemeta/design-system';
-import { AuthProvider } from '@/lib/auth/AuthContext';
-import { AuthGuard } from '@/components/auth/AuthGuard';
-import { Toaster } from '@wearemeta/design-system';
 
 export const metadata: Metadata = {
   title: 'WeAreMeta App',
