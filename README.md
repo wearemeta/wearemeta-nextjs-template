@@ -76,8 +76,8 @@ node setup.js # Node.js version
 The script will:
 - ✅ Update package.json with your app name (detected from directory)
 - ✅ Update app metadata (title and description)
-- ✅ Build the design system
-- ✅ Install dependencies
+- ✅ Create .npmrc for GitHub Packages authentication
+- ✅ Install dependencies (from GitHub Packages)
 - ✅ Create .env.local file
 
 Then run:
@@ -87,21 +87,30 @@ pnpm dev
 
 **Option 2: Manual Setup**
 
-1. **Build the design system first** (if not already built):
+1. **Set up GitHub Packages authentication**:
 
 ```bash
-cd ../wearemeta-design-system
-pnpm build
+# Create a GitHub Personal Access Token with 'read:packages' scope
+# Then set it as an environment variable:
+export GITHUB_TOKEN=your_token_here
 ```
 
-2. **Install dependencies**:
+2. **Create `.npmrc` file**:
 
 ```bash
-cd ../my-new-app
+cat > .npmrc << EOF
+@wearemeta:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=\${GITHUB_TOKEN}
+EOF
+```
+
+3. **Install dependencies**:
+
+```bash
 pnpm install
 ```
 
-3. **Create .env.local**:
+4. **Create .env.local**:
 
 ```bash
 cat > .env.local << EOF
@@ -111,13 +120,13 @@ NEXT_PUBLIC_DEV_AUTH_TOKEN=
 EOF
 ```
 
-4. **Run the development server**:
+5. **Run the development server**:
 
 ```bash
 pnpm dev
 ```
 
-5. **Open** [http://localhost:3000](http://localhost:3000) in your browser.
+6. **Open** [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 📁 Project Structure
 
@@ -187,20 +196,47 @@ NEXT_PUBLIC_DEV_BYPASS_AUTH=false
 NEXT_PUBLIC_DEV_AUTH_TOKEN=your-dev-token-here
 ```
 
-### Design System Path
+### Design System Package
 
-The template uses a local file reference to the design system:
+The template uses the published `@wearemeta/design-system` package from GitHub Packages:
 
 ```json
-"@wearemeta/design-system": "file:../wearemeta-design-system/packages/design-system"
+"@wearemeta/design-system": "^0.1.0"
 ```
 
-Make sure the design system is built before running your app:
+#### Setting up GitHub Packages Authentication
+
+1. **Create a GitHub Personal Access Token**:
+   - Go to [GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)](https://github.com/settings/tokens/new)
+   - Generate a new token with `read:packages` scope
+   - Copy the token
+
+2. **Set the token as an environment variable**:
+   ```bash
+   export GITHUB_TOKEN=your_token_here
+   ```
+   
+   Or add it to your shell profile (`~/.zshrc` or `~/.bashrc`):
+   ```bash
+   echo 'export GITHUB_TOKEN=your_token_here' >> ~/.zshrc
+   source ~/.zshrc
+   ```
+
+3. **The `.npmrc` file** (created by the setup script) will use this token automatically.
+
+#### Updating the Design System
+
+When a new version of the design system is published, update it in your app:
 
 ```bash
-cd ../wearemeta-design-system
-pnpm build
+# Update to the latest compatible version
+pnpm update @wearemeta/design-system
+
+# Or update package.json manually to a specific version
+# "@wearemeta/design-system": "^0.2.0"
 ```
+
+The version range (`^0.1.0`) allows automatic updates for patch and minor versions, but not major versions (which may contain breaking changes).
 
 ### Authentication
 
@@ -301,6 +337,23 @@ The avatar is populated from the authentication context, which fetches user data
 - `pnpm build` - Build for production
 - `pnpm start` - Start production server
 - `pnpm lint` - Run ESLint
+- `pnpm setup` - Run the automated setup script
+
+## 🔄 Updating the Design System
+
+When a new version of the design system is published, update it in your app:
+
+```bash
+# Update to the latest compatible version
+pnpm update @wearemeta/design-system
+
+# Or manually edit package.json to specify a version
+# "@wearemeta/design-system": "^0.2.0"
+```
+
+The `^` prefix allows automatic updates for patch and minor versions. For example:
+- `^0.1.0` will update to `0.1.1`, `0.2.0`, but not `1.0.0`
+- This ensures you get bug fixes and new features, but not breaking changes
 
 ## 📚 Learn More
 

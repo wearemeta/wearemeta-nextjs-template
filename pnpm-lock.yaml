@@ -12,8 +12,8 @@ importers:
         specifier: ^5.0.1
         version: 5.2.8
       '@wearemeta/design-system':
-        specifier: file:../wearemeta-design-system/packages/design-system
-        version: file:../wearemeta-design-system/packages/design-system(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.19)
+        specifier: ^0.1.0
+        version: 0.1.1(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.19)
       axios:
         specifier: ^1.7.9
         version: 1.13.2
@@ -1053,8 +1053,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@wearemeta/design-system@file:../wearemeta-design-system/packages/design-system':
-    resolution: {directory: ../wearemeta-design-system/packages/design-system, type: directory}
+  '@wearemeta/design-system@0.1.1':
+    resolution: {integrity: sha512-GxaJIvbH7xwSuZn4LjoUXKH+ta7e1uq/t5jODXIRTeZTG7WYtpdHO0bioy773kE+dY5G/jRHTC6Yx92kvRv2oQ==, tarball: https://npm.pkg.github.com/download/@wearemeta/design-system/0.1.1/c81b6814c73293057c1fb5e7269b00ed29309cfe}
     peerDependencies:
       react: ^18.3.1
       react-dom: ^18.3.1
@@ -3455,7 +3455,7 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
 
-  '@wearemeta/design-system@file:../wearemeta-design-system/packages/design-system(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.19)':
+  '@wearemeta/design-system@0.1.1(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.19)':
     dependencies:
       '@fontsource/geist': 5.2.8
       '@radix-ui/react-alert-dialog': 1.1.15(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)

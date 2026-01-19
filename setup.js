@@ -76,25 +76,22 @@ function updateAppMetadata(appName) {
   log('✅ Updated app metadata', 'green');
 }
 
-function buildDesignSystem() {
-  const designSystemPath = path.join(process.cwd(), '..', 'wearemeta-design-system');
+function createNpmrc() {
+  const npmrcPath = path.join(process.cwd(), '.npmrc');
   
-  if (!fs.existsSync(designSystemPath)) {
-    log('⚠️  Design system not found at ../wearemeta-design-system', 'yellow');
-    log('   Make sure the design system is in the parent directory.', 'yellow');
+  if (fs.existsSync(npmrcPath)) {
+    log('⚠️  .npmrc already exists, skipping...', 'yellow');
     return;
   }
   
-  try {
-    log('Building design system...', 'blue');
-    execSync('pnpm build', { 
-      cwd: designSystemPath, 
-      stdio: 'inherit' 
-    });
-    log('✅ Design system built', 'green');
-  } catch (error) {
-    log('⚠️  Failed to build design system. Make sure pnpm is installed.', 'yellow');
-  }
+  const npmrcContent = `@wearemeta:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=\${GITHUB_TOKEN}
+`;
+  
+  fs.writeFileSync(npmrcPath, npmrcContent);
+  log('✅ Created .npmrc', 'green');
+  log('   ⚠️  Make sure to set GITHUB_TOKEN environment variable', 'yellow');
+  log('   See: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages', 'yellow');
 }
 
 function installDependencies() {
@@ -143,8 +140,8 @@ function main() {
   log('Step 2: Updating app metadata...', 'blue');
   updateAppMetadata(appName);
   
-  log('Step 3: Building design system...', 'blue');
-  buildDesignSystem();
+  log('Step 3: Creating .npmrc for GitHub Packages...', 'blue');
+  createNpmrc();
   
   log('Step 4: Installing dependencies...', 'blue');
   installDependencies();

@@ -7,6 +7,7 @@ import '../src/styles/globals.css';
 import { AuthProvider } from '@/lib/auth/AuthContext';
 import { AuthGuard } from '@/components/auth/AuthGuard';
 import { Toaster } from '@wearemeta/design-system';
+import ClientLayout from './client-layout';
 
 export const metadata: Metadata = {
   title: 'WeAreMeta App',
@@ -23,7 +24,9 @@ export default function RootLayout({
       <body className="flex flex-col min-h-screen antialiased meta-theme" suppressHydrationWarning>
         <AuthProvider>
           <AuthGuard>
-            {children}
+            <ClientLayout>
+              {children}
+            </ClientLayout>
             <Toaster />
           </AuthGuard>
         </AuthProvider>
