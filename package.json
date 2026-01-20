@@ -10,7 +10,7 @@
     "setup": "node setup.js"
   },
   "dependencies": {
-    "@wearemeta/design-system": "^0.1.6",
+    "@wearemeta/design-system": "^0.1.7",
     "@fontsource/geist": "^5.0.1",
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
