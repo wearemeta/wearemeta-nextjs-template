@@ -1,5 +1,6 @@
 'use client';
 
+import * as React from 'react';
 import { AppLayout } from '@wearemeta/design-system';
 import {
   SidebarGroup,
@@ -41,7 +42,7 @@ function UserDropdown() {
     avatar: user?.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=User&backgroundColor=b6e3f4,c0aede,d1d4f9',
     initials: (user?.name || user?.display_name || 'U')
       .split(' ')
-      .map((n) => n[0])
+      .map((n: string) => n[0])
       .join('')
       .toUpperCase()
       .slice(0, 2),

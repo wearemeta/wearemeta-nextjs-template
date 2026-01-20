@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import * as React from 'react';
 import '@wearemeta/design-system/styles';
 import '@wearemeta/design-system/themes/meta';
 import '@wearemeta/design-system/themes/sidebar';
