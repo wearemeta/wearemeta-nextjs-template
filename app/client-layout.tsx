@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import { AppLayout } from '@wearemeta/design-system';
 import {
   SidebarGroup,
@@ -32,7 +33,7 @@ import { Home, Settings, FileText, Pin, PinOff, LogOut } from 'lucide-react';
 import { useAuth } from '@/lib/auth/AuthContext';
 
 function UserDropdown() {
-  const { setIsDropdownOpen } = useSidebarDropdown();
+  const { setIsDropdownOpen, isDropdownOpen } = useSidebarDropdown();
   const { isPinned, togglePin } = useSidebarPin();
   const { user, logout } = useAuth();
 
@@ -53,17 +54,21 @@ function UserDropdown() {
       <DropdownMenu onOpenChange={setIsDropdownOpen}>
         <DropdownMenuTrigger asChild>
           <button
+            aria-label={`User menu for ${userData.name}`}
+            aria-haspopup="menu"
+            aria-expanded={isDropdownOpen}
             className="
               flex items-center gap-3 p-2 rounded-lg transition-colors duration-200
               hover:bg-sidebar-accent hover:text-sidebar-accent-foreground
+              focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-sidebar
               data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground
               group-data-[collapsible=icon]:w-12 group-data-[collapsible=icon]:h-12 group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:justify-center
               w-full
             "
           >
             <Avatar className="h-8 w-8 flex-shrink-0">
-              <AvatarImage src={userData.avatar} alt={userData.name} />
-              <AvatarFallback>{userData.initials}</AvatarFallback>
+              <AvatarImage src={userData.avatar} alt={`${userData.name}'s avatar`} />
+              <AvatarFallback aria-label={`${userData.name} initials`}>{userData.initials}</AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
               <span className="truncate font-semibold">{userData.name}</span>
@@ -76,23 +81,33 @@ function UserDropdown() {
           side="top"
           align="end"
           sideOffset={4}
+          role="menu"
+          aria-label="User menu"
         >
-          <DropdownMenuItem onClick={togglePin}>
+          <DropdownMenuItem 
+            onClick={togglePin}
+            role="menuitem"
+            aria-label={isPinned ? 'Unpin sidebar' : 'Pin sidebar'}
+          >
             {isPinned ? (
               <>
-                <PinOff className="mr-2 h-4 w-4" />
+                <PinOff className="mr-2 h-4 w-4" aria-hidden="true" />
                 Unpin Sidebar
               </>
             ) : (
               <>
-                <Pin className="mr-2 h-4 w-4" />
+                <Pin className="mr-2 h-4 w-4" aria-hidden="true" />
                 Pin Sidebar
               </>
             )}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={logout}>
-            <LogOut className="mr-2 h-4 w-4" />
+          <DropdownMenuItem 
+            onClick={logout}
+            role="menuitem"
+            aria-label="Log out"
+          >
+            <LogOut className="mr-2 h-4 w-4" aria-hidden="true" />
             Log out
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -121,52 +136,71 @@ export default function ClientLayout({
   return (
     <AppLayout
       sidebarContent={
-        <>
+        <nav aria-label="Main navigation">
           <SidebarGroup>
             <SidebarGroupLabel>Navigation</SidebarGroupLabel>
             <SidebarGroupContent>
-              <SidebarMenu className="group-data-[collapsible=icon]:items-center">
+              <SidebarMenu className="group-data-[collapsible=icon]:items-center" role="menubar" aria-label="Main navigation menu">
                 <SidebarMenuItem>
-                  <SidebarMenuButton className="text-body hover:bg-subtle hover:text-sidebar-accent-foreground">
-                    <Home className="size-4" />
-                    <span>Home</span>
+                  <SidebarMenuButton 
+                    asChild
+                    className="text-body hover:bg-subtle hover:text-sidebar-accent-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                  >
+                    <Link href="/" aria-label="Navigate to home page">
+                      <Home className="size-4" aria-hidden="true" />
+                      <span>Home</span>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton className="text-body hover:bg-subtle hover:text-sidebar-accent-foreground">
-                    <FileText className="size-4" />
+                  <SidebarMenuButton 
+                    className="text-body hover:bg-subtle hover:text-sidebar-accent-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                    aria-label="Navigate to page 1"
+                  >
+                    <FileText className="size-4" aria-hidden="true" />
                     <span>Page 1</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton className="text-body hover:bg-subtle hover:text-sidebar-accent-foreground">
-                    <Settings className="size-4" />
-                    <span>Settings</span>
+                  <SidebarMenuButton 
+                    asChild
+                    className="text-body hover:bg-subtle hover:text-sidebar-accent-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                  >
+                    <Link href="/settings" aria-label="Navigate to settings page">
+                      <Settings className="size-4" aria-hidden="true" />
+                      <span>Settings</span>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
-        </>
+        </nav>
       }
       sidebarFooter={<UserDropdown />}
       showReportIssueButton={true}
       onReportIssue={handleReportIssue}
       headerContent={
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Home</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Dashboard</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
+        <nav aria-label="Breadcrumb navigation">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href="/">Home</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator aria-hidden="true" />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Dashboard</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </nav>
       }
     >
-      {children}
+      <main id="main-content" role="main" aria-label="Main content" tabIndex={-1}>
+        {children}
+      </main>
     </AppLayout>
   );
 }

@@ -12,8 +12,8 @@ importers:
         specifier: ^5.0.1
         version: 5.2.8
       '@wearemeta/design-system':
-        specifier: ^0.1.0
-        version: 0.1.1(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.19)
+        specifier: ^0.1.6
+        version: 0.1.6(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(html2canvas@1.4.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.19)
       axios:
         specifier: ^1.7.9
         version: 1.13.2
@@ -1053,9 +1053,10 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@wearemeta/design-system@0.1.1':
-    resolution: {integrity: sha512-GxaJIvbH7xwSuZn4LjoUXKH+ta7e1uq/t5jODXIRTeZTG7WYtpdHO0bioy773kE+dY5G/jRHTC6Yx92kvRv2oQ==, tarball: https://npm.pkg.github.com/download/@wearemeta/design-system/0.1.1/c81b6814c73293057c1fb5e7269b00ed29309cfe}
+  '@wearemeta/design-system@0.1.6':
+    resolution: {integrity: sha512-aEEOKg2B+SEcFHvUXfD9WdqOMf/UM4WEiaXDHJFaLxjNSwjAqqfeZ2+uSzzNFK6mZsjyapaaku2Lfr00KDOAhw==, tarball: https://npm.pkg.github.com/download/@wearemeta/design-system/0.1.6/d9a9b0f58b15a67408efaf298e8e0c91ebbc8ae4}
     peerDependencies:
+      html2canvas: ^1.4.1
       react: ^18.3.1
       react-dom: ^18.3.1
 
@@ -3455,7 +3456,7 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
 
-  '@wearemeta/design-system@0.1.1(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.19)':
+  '@wearemeta/design-system@0.1.6(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(html2canvas@1.4.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.19)':
     dependencies:
       '@fontsource/geist': 5.2.8
       '@radix-ui/react-alert-dialog': 1.1.15(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3476,6 +3477,7 @@ snapshots:
       class-variance-authority: 0.7.1
       clsx: 2.1.1
       embla-carousel-react: 8.6.0(react@18.3.1)
+      html2canvas: 1.4.1
       lucide-react: 0.460.0(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
